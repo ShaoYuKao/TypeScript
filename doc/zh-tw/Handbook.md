@@ -2365,9 +2365,9 @@ module Animal {
 }
 ```
 
-因為haveMuscles並沒有匯出，只有animalsHaveMuscles函數共用了原始未合併的模組可以訪問這個變數。doAnimalsHaveMuscles函數雖是合併模組的一部分，但是訪問不了未匯出的成員。
+因為haveMuscles並沒有匯出，只有animalsHaveMuscles函數共享了原始未合併的模組可以訪問這個變數。doAnimalsHaveMuscles函數雖是合併模組的一部分，但是訪問不了未匯出的成員。
 
-### <a name="9.4"></a>模組與類和函數和列舉型別合併
+### <a name="9.4"></a>模組與類別和函數和列舉型別合併
 
 模組可以與其它型別的宣告進行合併。只要模組的定義符合將要合併型別的定義。合併結果包含兩者的宣告型別。Typescript使用這個功能去實現一些JavaScript裡的設計模式。
 
@@ -2382,9 +2382,9 @@ module Album {
 }
 ```
 
-合併規則與上面‘合併模組’小節裡講的規則一致，我們必須匯出AlbumLabel類，好讓合併的類能訪問。合併結果是一個類並帶有一個內部類。你也可以使用模組為類增加一些靜態屬性。
+合併規則與上面‘合併模組’小節裡講的規則一致，我們必須匯出AlbumLabel類，好讓合併的類別能訪問。合併結果是一個類別並帶有一個內部類別。你也可以使用模組為類別增加一些靜態屬性。
 
-除了內部類的模式，你在JavaScript裡，建立一個函數稍後擴充它增加一些屬性也是很常見的。Typescript使用宣告合併來達到這個目的並保證型別安全。
+除了內部類別的模式，你在JavaScript裡，建立一個函數稍後擴充它增加一些屬性也是很常見的。Typescript使用宣告合併來達到這個目的並保證型別安全。
 
 ```typescript
 function buildLabel(name: string): string {
@@ -2428,7 +2428,7 @@ module Color {
 
 ### <a name="9.5"></a>非法的合併
 
-並不是所有的合併都被允許。現在，類不能與類合併，變數與型別不能合併，介面與類不能合併。想要模仿類的合併，請參考[Mixins in TypeScript](https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript&referringTitle=Declaration%20Merging)。
+並不是所有的合併都被允許。現在，類別不能與類別合併，變數與型別不能合併，介面與類別不能合併。想要模仿類別的合併，請參考[Mixins in TypeScript](https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript&referringTitle=Declaration%20Merging)。
 
 ## <a name="10"></a>型別推論
 
