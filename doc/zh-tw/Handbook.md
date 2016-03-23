@@ -2113,9 +2113,9 @@ findKeeper(Lion).nametag;  // typechecks!
 
 ## <a name="8"></a>Mixins
 
-除了傳統的物件導向繼承方式，還有一種流行的從可重用元件中建立類的方式，就是通過聯合一個簡單類的程式碼。你可能在Scala這樣的語言裡對mixins已經熟悉了，它在JavaScript中也是很流行的。
+除了傳統的物件導向繼承方式，還有一種流行的從可重用組件中建立類別的方式，就是通過聯合一個簡單類別的程式碼。你可能在Scala這樣的語言裡對mixins已經熟悉了，它在JavaScript中也是很流行的。
 
-### <a name="8.1"></a>混入範例
+### <a name="8.1"></a>Mixin範例
 
 下面的程式碼演示了如何在TypeScript裡使用mixins。後面我們還會解釋這段程式碼是怎麼工作的。
 
@@ -2126,7 +2126,6 @@ class Disposable {
     dispose() {
         this.isDisposed = true;
     }
- 
 }
  
 // Activatable Mixin
@@ -2177,9 +2176,9 @@ function applyMixins(derivedCtor: any, baseCtors: any[]) {
 
 ### <a name="8.2"></a>理解這個例子
 
-程式碼裡首先定義了兩個類，它們將做為mixins。
-可以看到每個類都只定義了一個特定的行為或功能。
-稍後我們使用它們來建立一個新類，同時具有這兩種功能。
+程式碼裡首先定義了兩個類別，它們將做為mixins。
+可以看到每個類別都只定義了一個特定的行為或功能。
+稍後我們使用它們來建立一個新類別，同時具有這兩種功能。
 
 ```typescript
 // Disposable Mixin
@@ -2203,7 +2202,7 @@ class Activatable {
 }
 ```
 
-下面建立一個類，結合了這兩個mixins。下面來看一下具體是怎麼操作的。
+下面建立一個類別，結合了這兩個mixins。下面來看一下具體是怎麼操作的。
 
 ```typescript
 class SmartObject implements Disposable, Activatable {}
@@ -2211,7 +2210,7 @@ class SmartObject implements Disposable, Activatable {}
 
 首先應該注意到的是，沒使用‘extends’而是使用‘implements’。把類當成了介面，僅使用Disposable和Activatable的型別而非其實現。這意味著我們需要在類裡面實現介面。但是這是我們在用mixin時想避免的。
 
-我們可以這麼做來達到目的，為將要mixin進來的屬性方法建立出占位元屬性。這告訴編譯器這些成員在運行時是可用的。這樣就能使用mixin帶來的便利，雖說需要提前定義一些占位元屬性。
+我們可以這麼做來達到目的，為將要mixin進來的屬性方法建立出替代屬性(stand-in properties)。這告訴編譯器這些成員在運行時是可用的。這樣就能使用mixin帶來的便利，雖說需要提前定義一些替代屬性。
 
 ```typescript
 // Disposable
@@ -2229,7 +2228,7 @@ deactivate: () => void;
 applyMixins(SmartObjet, [Disposable, Activatable])
 ```
 
-最後，建立這個説明函數，幫我們做混入操作。它會遍歷mixins上的所有屬性，並複製到目標上去，把之前的占位元屬性替換成真正的實現程式碼。
+最後，建立這個説明函數，幫我們做混入操作。它會遍歷mixins上的所有屬性，並複製到目標上去，把之前的替代屬性替換成真正的實現程式碼。
 
 ```typescript
 function applyMixins(derivedCtor: any, baseCtors: any[]) {
