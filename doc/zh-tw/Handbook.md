@@ -1479,8 +1479,8 @@ var t = new shapes.Triangle();
 ## <a name="5"></a>函數
 
 函數是JavaScript應用程式的基礎。
-它説明你實現抽象層，類比類，資訊隱藏和模組。
-在TypeScript裡，雖然已經支持類，命名空間和模組，但函數仍然是主要的定義*行為*的地方。
+它説明你實現抽象層，模仿類別，資訊隱藏和模組。
+在TypeScript裡，雖然已經支持類別，命名空間和模組，但函數仍然是主要的定義*行為*的地方。
 TypeScript為JavaScript函數添加了額外的功能，讓我們可以更容易的使用。
 
 ### <a name="5.1"></a>Functions
@@ -1500,7 +1500,7 @@ function add(x, y) {
 var myAdd = function(x, y) { return x + y; };
 ```
 
-在JavaScript裡，函數可以可以使用函數體外部的變數。當函數這麼做時，我們說它‘捕獲’了這些變數。至於為什麼可以這樣做以及其中的利弊超出了本文的範圍，但是深刻理解這個機制對學習JavaScript和TypeScript會很有幫助。
+在JavaScript裡，函數可以使用函數體外部的變數。當函數這麼做時，我們說它‘捕獲’(capture)了這些變數。至於為什麼可以這樣做以及其中的利弊超出了本文的範圍，但是深刻理解這個機制對學習JavaScript和TypeScript會很有幫助。
 
 ```javascript
 var z = 100;
@@ -1526,7 +1526,7 @@ var myAdd = function(x: number, y: number): number { return x + y; };
 
 我們可以給每個參數添加型別之後再為函數本身添加返回型別。TypeScript能夠根據返回語句自動推斷出返回型別，因此我們通常省略它。
 
-#### <a name="5.2.2"></a>書寫完整函數型別
+#### <a name="5.2.2"></a>撰寫函數型別
 
 現在我們已經為函數指定了型別，下面讓我們寫出函數的完整型別。
 
@@ -1542,7 +1542,7 @@ var myAdd: (baseValue:number, increment:number)=>number =
     function(x: number, y: number): number { return x+y; };
 ```
 
-只要參數型別是符合的，那麼就認為它是有效的函數型別，而不在乎參數名是否正確。
+只要參數型別是符合的，那麼就認為它是有效的函數型別，而不在乎參數名稱是否正確。
 
 對於返回值，我們在函數和返回型別之前使用(=>)符號，使之清晰明瞭。如之前提到的，返回型別是函數型別的必要部分，如果函數沒有返回任何值，你也必須指定返回型別為‘void’而不能留空。
 
@@ -1561,14 +1561,14 @@ var myAdd: (baseValue:number, increment:number) => number =
     function(x, y) { return x + y; };
 ```
 
-這叫做‘按上下文歸類’，是型別推論的一種。
+這叫做依‘情境歸類’(contextual typing)，是型別推論的一種。
 它説明我們更好地為程式指定型別。
 
 ### <a name="5.3"></a>選擇性參數和預設參數
 
 不同於JavaScript，TypeScript裡每個函數參數都是必須的。
 這並不是指參數一定是個非`null`值，而是編譯器檢查使用者是否為每個參數都傳入了值。
-編譯器還會假設只有這些參數會被傳遞進函數。
+編譯器還會假設只有這些參數會被傳遞進入函數。
 簡短地說，傳遞給函數的參數數量必須與函數期望的參數數量一致。
 
 ```typescript
@@ -1581,7 +1581,7 @@ var result2 = buildName("Bob", "Adams", "Sr.");  //error, too many parameters
 var result3 = buildName("Bob", "Adams");  //ah, just right
 ```
 
-JavaScript裡，每個參數都是選擇性的，可傳可不傳。沒傳參的時候，它的值就是undefined。在TypeScript裡我們可以在參數名旁使用‘?’實現選擇性參數的功能。比如，我們想讓last name是選擇性的：
+JavaScript裡，每個參數都是選擇性的，可傳值可不傳值。沒傳值的時候，它的值就是undefined。在TypeScript裡我們可以在參數名稱旁使用‘?’實現選擇性參數的功能。比如，我們想讓last name是選擇性的：
 
 ```typescript
 function buildName(firstName: string, lastName?: string) {
@@ -1612,7 +1612,7 @@ var result3 = buildName("Bob", "Adams");  //ah, just right
 
 和選擇性參數一樣，帶預設值的參數也要放在必須參數後面。
 
-選擇性參數與預設值參數共用參數型別。
+選擇性參數與預設值參數共享參數型別，如下所示：
 
 ```typescript
 function buildName(firstName: string, lastName?: string) {
@@ -1624,11 +1624,11 @@ function buildName(firstName: string, lastName?: string) {
 function buildName(firstName: string, lastName = "Smith") {
 ```
 
-共用同樣的型別`(firstName: string, lastName?: string) => string`。預設參數的預設值消失了，只保留了它是一個選擇性參數的資訊。
+共享同樣的型別`(firstName: string, lastName?: string) => string`。預設參數的預設值消失了，只保留了它是一個選擇性參數的資訊。
 
 ### <a name="5.4"></a>剩餘參數
 
-必要參數，預設參數和選擇性參數有個共同點：它們表示某一個參數。有時，你想同時操作多個參數，或者你並不知道會有多少參數傳遞進來。在JavaScript裡，你可以使用arguments來訪問所有傳入的參數。
+必要參數，預設參數和選擇性參數有個共通點：它們表示某一個參數。有時，你想同時操作多個參數，或者你並不知道會有多少參數傳遞進來。在JavaScript裡，你可以使用arguments來訪問所有傳入的參數。
 
 在TypeScript裡，你可以把所有參數收集到一個變數裡：
 
@@ -1640,7 +1640,7 @@ function buildName(firstName: string, ...restOfName: string[]) {
 var employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
 ```
 
-剩餘參數會被當做個數不限的選擇性參數。可以一個都沒有，同樣也可以有任意個。編譯器建立參數陣列，名稱是你在省略號（...）後面給定的名稱，你可以在函數體內使用這個陣列。
+剩餘參數會被當做個數不限的選擇性參數。可以一個都沒有，同樣也可以有任意個數。編譯器建立參數陣列，名稱是你在省略號（...）後面給定的名稱，你可以在函數體內使用這個陣列。
 
 這個省略號也會在帶有剩餘參數的函數型別定義上使用到。
 
@@ -1656,7 +1656,7 @@ var buildNameFun: (fname: string, ...rest: string[]) => string = buildName;
 
 JavaScript裡‘this’的工作機制對JavaScript程式師來說已經是老生常談了。的確，學會如何使用它絕對是JavaScript程式設計中的一件大事。由於TypeScript是JavaScript的超集合，TypeScript程式師也需要弄清‘this’工作機制並且當有bug的時候能夠找出錯誤所在。‘this’的工作機制可以單獨寫一本書了，並確已有人這麼做了。在這裡，我們只介紹一些基礎知識。
 
-JavaScript裡，‘this’的值在函數被呼叫的時候才會指定。這是個既強大又靈活的特點，但是你需要花點時間弄清楚函式呼叫的上下文是什麼。眾所周知這不是一件很簡單的事，特別是函數當做回呼函數使用的時候。
+JavaScript裡，*‘this’的值在函數被呼叫的時候才會指定*。這是個既強大又靈活的特點，但是你需要花點時間弄清楚函式呼叫的脈絡是什麼。眾所皆知這不是一件很簡單的事，特別是函數當做回呼函數使用的時候。
 
 下面看一個例子：
 
@@ -1684,7 +1684,7 @@ alert("card: " + pickedCard.card + " of " + pickedCard.suit);
 因為`createCardPicker`返回的函數裡的`this`被設置成了`window`而不是`deck`物件。
 當你呼叫`cardPicker()`時會發生這種情況。這裡沒有對`this`進行動態繫結因此為window。（注意在嚴格模式下，會是undefined而不是window）。
 
-為了解決這個問題，我們可以在函數被返回時就綁好正確的`this`。
+為了解決這個問題，我們可以在函數被返回時就繫結好正確的`this`。
 這樣的話，無論之後怎麼使用它，都會參考綁定的‘deck’物件。
 
 我們把函數運算式變為使用lambda運算式（ () => {} ）。這樣就會在函數建立的時候就指定了‘this’值，而不是在函式呼叫的時候。
@@ -1712,7 +1712,9 @@ alert("card: " + pickedCard.card + " of " + pickedCard.suit);
 
 為瞭解更多關於`this`的資訊，請閱讀Yahuda Katz的[Understanding JavaScript Function Invocation and "this"](http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/)。
 
-### <a name="5.6"></a>重載
+> 補充：[#Javascript：this用法整理](https://software.intel.com/zh-cn/blogs/2013/10/09/javascript-this)
+
+### <a name="5.6"></a>多載
 
 JavaScript本身是個動態語言。
 JavaScript裡函數根據傳入不同的參數而返回不同型別的資料是很常見的。
@@ -1744,7 +1746,7 @@ alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 
 ‘pickCard’方法根據傳入參數的不同會返回兩種不同的型別。如果傳入的是代表紙牌的物件，函數作用是從中抓一張牌。如果使用者想抓牌，我們告訴他抓到了什麼牌。但是這怎麼在型別系統裡表示呢。
 
-方法是為同一個函數提供多個函數型別定義來進行函數重載。編譯器會根據這個清單去處理函數的呼叫。下面我們來重載‘pickCard’函數。
+方法是為同一個函數提供多個函數型別定義來進行函數多載。編譯器會根據這個清單去處理函數的呼叫。下面我們來多載‘pickCard’函數。
 
 ```typescript
 var suits = ["hearts", "spades", "clubs", "diamonds"];
@@ -1773,14 +1775,14 @@ var pickedCard2 = pickCard(15);
 alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 ```
 
-這樣改變後，重載的`pickCard`函數在呼叫的時候會進行正確的型別檢查。
+這樣改變後，多載的`pickCard`函數在呼叫的時候會進行正確的型別檢查。
 
 為了讓編譯器能夠選擇正確的檢查型別，它與JavaScript裡的處理流程相似。
-它尋找重載列表，嘗試使用第一個重載定義。
+它尋找多載列表，嘗試使用第一個多載定義。
 如果符合的話就使用這個。
-因此，在定義重載的時候，一定要把最精確的定義放在最前面。
+因此，在定義多載的時候，一定要把最精確的定義放在最前面。
 
-注意，`function pickCard(x): any`並不是重載列表的一部分，因此這裡只有兩個重載：一個是接收物件另一個接收數位。
+注意，`function pickCard(x): any`並不是多載列表的一部分，因此這裡只有兩個多載：一個是接收物件另一個接收數字。
 以其它參數呼叫`pickCard`會產生錯誤。
 
 ## <a name="6"></a>泛型
@@ -1864,7 +1866,7 @@ function loggingIdentity<T>(arg: T): T {
 ```
 
 如果這麼做，編譯器會報錯說我們使用了`arg`的`.length`屬性，但是沒有地方指明`arg`具有這個屬性。
-記住，這些型別變數代表的是任意型別，所以使用這個函數的人可能傳入的是個數位，而數位是沒有`.length`屬性的。
+記住，這些型別變數代表的是任意型別，所以使用這個函數的人可能傳入的是個數字，而數字是沒有`.length`屬性的。
 
 現在假設我們想操作`T`型別的陣列而不直接是`T`。由於我們操作的是陣列，所以`.length`屬性是應該存在的。
 我們可以像建立其它陣列一樣建立這個陣列：
@@ -1877,7 +1879,7 @@ function loggingIdentity<T>(arg: T[]): T[] {
 ```
 
 你可以這樣理解`loggingIdentity`的型別：泛型函數`loggingIdentity`，接收型別參數`T`，和函數`arg`，它是個元素型別是`T`的陣列，並返回元素型別是`T`的陣列。
-如果我們傳入數位陣列，將返回一個數位陣列，因為此時`T`的的型別為`number`。
+如果我們傳入數字陣列，將返回一個數字陣列，因為此時`T`的的型別為`number`。
 這可以讓我們把泛型變數T當做型別的一部分使用，而不是整個型別，增加了靈活性。
 
 我們也可以這樣實現上面的例子：
@@ -2280,9 +2282,9 @@ var box: Box = {height: 5, width: 6, scale: 10};
 
 介面中非函數的成員必須是唯一的。如果多個介面中具有相同名稱的非函數成員就會報錯。
 
-對於函數成員，每個同名函式宣告都會被當成這個函數的一個重載。
+對於函數成員，每個同名函式宣告都會被當成這個函數的一個多載。
 
-需要注意的是，介面A與它後面的介面A（把這個介面叫做A'）合併時，A'中的重載函數具有更高的優先順序。
+需要注意的是，介面A與它後面的介面A（把這個介面叫做A'）合併時，A'中的多載函數具有更高的優先順序。
 
 如下例所示：
 
@@ -2441,7 +2443,7 @@ TypeScript裡，在有些沒有明確指出型別的地方，型別推論會幫�
 var x = 3;
 ```
 
-變數x的型別被推斷為數位。這種推斷發生在初始化變數和成員，設置預設參數值和決定函數返回值時。
+變數x的型別被推斷為數字。這種推斷發生在初始化變數和成員，設置預設參數值和決定函數返回值時。
 
 大多數情況下，型別推論是直截了當地。後面的小節，我們會流覽型別推論時的細微差別。
 
@@ -2655,13 +2657,13 @@ invokeLater([1, 2], (x, y) => console.log(x + ', ' + y));
 invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));
 ```
 
-#### <a name="11.2.3"></a>函數重載
+#### <a name="11.2.3"></a>函數多載
 
-對於有重載的函數，源函數的每個重載都要在目標函數上找到對應的函數簽名。這確保了目標函數可以在所有源函數可呼叫的地方呼叫。對於特殊的函數重載簽名不會用來做相容性檢查。
+對於有多載的函數，源函數的每個多載都要在目標函數上找到對應的函數簽名。這確保了目標函數可以在所有源函數可呼叫的地方呼叫。對於特殊的函數多載簽名不會用來做相容性檢查。
 
 ### <a name="11.3"></a>列舉
 
-列舉型別與數位型別相容，並且數位型別與列舉型別相容。不同列舉型別之間是不相容的。比如，
+列舉型別與數字型別相容，並且數字型別與列舉型別相容。不同列舉型別之間是不相容的。比如，
 
 ```typescript
 enum Status { Ready, Waiting };
@@ -2746,7 +2748,7 @@ identity = reverse;  // Okay because (x: any)=>any matches (y: any)=>any
 
 目前為止，我們使用了`相容性`，它在語言規範裡沒有定義。
 在TypeScript裡，有兩種型別的相容性：子型別與賦值。
-它們的不同點在於，賦值擴充了子型別相容，允許給`any`賦值或從`any`取值和允許數位賦值給列舉型別或列舉型別賦值給數位。
+它們的不同點在於，賦值擴充了子型別相容，允許給`any`賦值或從`any`取值和允許數字賦值給列舉型別或列舉型別賦值給數字。
 
 語言裡的不同地方分別使用了它們之中的機制。
 實際上，型別相容性是由賦值相容性來控制的甚至在`implements`和`extends`語句裡。
