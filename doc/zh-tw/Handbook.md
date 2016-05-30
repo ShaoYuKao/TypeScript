@@ -1,4 +1,4 @@
-# TypeScript教學手冊
+# TypeScript 中文教學手冊
 
 正體翻譯：陳傳興 ([@kkbruce](https://github.com/kkbruce))
 
