@@ -6,6 +6,7 @@ TypeScript is a superset of JavaScript that compiles to clean JavaScript output.
 
 请阅读 :book: [TypeScript Handbook 中文版 - Published with GitBook](http://zhongsp.gitbooks.io/typescript-handbook/content/)
 
+翻譯為繁體中文：[TypeScript Handbook 繁體中文版](https://github.com/kkbruce/TypeScript/blob/master/doc/zh-tw/Handbook.md)
 
 ## 目录
 
